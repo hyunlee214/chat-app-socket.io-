@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
   socket.on('chatting', (data) => {
     console.log(data);
     // 서버에서 보낼 내용 
-    io.emit('chatting', `from Server ${data}`)
+    io.emit('chatting', data);
   })
 })
 
