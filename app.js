@@ -14,10 +14,9 @@ const PORT = process.env.PORT || 5000;
 
 io.on('connection', (socket) => {
   // 서버로 보낸 내용 출력
-  socket.on('chatting', (data) => {
-    console.log(data);
+  socket.on('chatting', (data) => { 
     // 서버에서 보낼 내용 
-    io.emit('chatting', data);
+    io.emit('chatting', data)
   })
 })
 

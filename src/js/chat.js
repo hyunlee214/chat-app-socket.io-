@@ -13,15 +13,38 @@ sendButton.addEventListener('click', () => {
     name : nickname.value,
     msg : chatInput.value
   }
-
-  socket.emit('chatting', param);
+  socket.emit('chatting', param)  
 })
 
 // 서버에서 보낸 메세지 받는 기능 + 출력
+// 서버에서 데이터를 받을 때마다 li데이터 호출
 socket.on('chatting', (data) => {
-  const li = document.createElement('li');
-  li.innerText = `${data.name}님의 메세지 : ${data.msg}`;
+  const { name, msg, time } = data;
+  const item = new LiModel(name, msg, time);
+  // 데이터 넘겨받으면, makeLi()메서드 호출
+  item.makeLi()
+}) 
+
+function LiModel(name, msg, time) {
+  this.name = name;
+  this.msg = msg;
+  this.time = time;
+
+  this.makeLi = () => {
+    const li = document.createElement("li");
+  
+    const dom = `<span class="profile">
+    <span class="user">${this.name}</span>
+    <img class="image" src="https://placeimg.com/50/50/any" alt="any">
+  </span>
+  <span class="message">${this.msg}</span>
+  <span class="time">${this.time}</span>`;
+ 
+  // dom을 innerHTML로 추가
+  li.innerHTML = dom;
+  // li를 chatList에 추가
   chatList.appendChild(li);
-})
+  }
+}
 
 console.log(socket);
